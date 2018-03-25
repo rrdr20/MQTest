@@ -11,6 +11,7 @@ package main
 
 import (
     "fmt"
+    "time"
     "github.com/eclipse/paho.mqtt.golang"
 )
 
@@ -29,8 +30,10 @@ func main() {
 
     for i := 0; i < 5; i++ {
         pub_msg := fmt.Sprintf("publish test messages %d", i)
-        token := client.Publish("test/go", 0, false, pub_msg)
+	token := client.Publish("test/go", 0, false, pub_msg)
         token.Wait()
+
+	time.Sleep(3 * time.Second)
     }
 
     client.Disconnect(250)

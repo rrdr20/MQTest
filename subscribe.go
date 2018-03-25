@@ -17,7 +17,7 @@ import (
 )
 
 func test_message_handler(client mqtt.Client, msg mqtt.Message) {
-    rec_msg := fmt.Sprintf("Topic: %s, Message: %s", msg.Topic(), msg.Payload())
+    rec_msg := fmt.Sprintf("Topic: %s Message: %s", string(msg.Topic()), string(msg.Payload()))
     fmt.Println(rec_msg)
 }
 
@@ -39,8 +39,6 @@ func main() {
 
     token := client.Subscribe("test/go", 0, test_message_handler)
     token.Wait()
-
-    client.Disconnect(250)
 
     <-c
 }
