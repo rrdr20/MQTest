@@ -2,7 +2,7 @@
  * subscribe - Test connection to MQTT server and prints messages received on speificed topic.
  * 
  * TODO:
- *   - Add flag for specifying servier connection details
+ *   - Add flag for specifying server connection details
  *   - Add flag for specificy topic to subscribe
  */
 
@@ -17,7 +17,7 @@ import (
 )
 
 func test_message_handler(client mqtt.Client, msg mqtt.Message) {
-    rec_msg := fmt.Sprintf("Topic: %s Message: %s", string(msg.Topic()), string(msg.Payload()))
+    rec_msg := fmt.Sprintf("Topic: %s -- Message: %s", string(msg.Topic()), string(msg.Payload()))
     fmt.Println(rec_msg)
 }
 
