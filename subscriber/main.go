@@ -1,15 +1,14 @@
 /*
  * subscribe - Test connection to MQTT server and prints messages received on speificed topic.
- * 
- * TODO:
- *   - Add flag for specifying server connection details
- *   - Add flag for specificy topic to subscribe
+ *
+ * Loops indefinitely and receives messages on the topic from the server.
  */
 
 package main
 
 import (
     "fmt"
+    "flag"
     "os"
     "os/signal"
     "syscall"
@@ -22,6 +21,10 @@ func test_message_handler(client mqtt.Client, msg mqtt.Message) {
 }
 
 func main() {
+    host := flag.String("host","localhost","Host name of the MQTT server")
+    topic := flag.String("topic", "#", "The topic to subscribe")
+    flag.Parse()
+
     c := make(chan os.Signal, 1) 
     signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 
@@ -29,7 +32,7 @@ func main() {
     fmt.Println()
 
     opt := mqtt.NewClientOptions()
-    opt.AddBroker("tcp://localhost:1883")
+    opt.AddBroker(fmt.Sprintf("tcp://%s:1883", *host))
 
     client := mqtt.NewClient(opt)
 
@@ -37,7 +40,7 @@ func main() {
         fmt.Println(token.Error())
     }
 
-    token := client.Subscribe("test/go", 0, test_message_handler)
+    token := client.Subscribe(*topic, 0, test_message_handler)
     token.Wait()
 
     <-c

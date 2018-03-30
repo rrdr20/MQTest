@@ -1,26 +1,32 @@
 /*
  * publish - Test connection to MQTT server and publishes messages to the topic.
  *
+ * Loops indefinitely and publishes a message every 3 seconds to specified topic.
+ *
  * TODO:
- *   - Add flag for specifying servier connection details
- *   - Add flag for topic
  *   - Add flag for message and repeat count
+ *   - Add control statements for clean shutdown
  */
 
 package main
 
 import (
     "fmt"
+    "flag"
     "time"
     "github.com/eclipse/paho.mqtt.golang"
 )
 
 func main() {
+    host := flag.String("host","localhost","Host name of the MQTT server")
+    topic := flag.String("topic", "#", "The topic to subscribe")
+    flag.Parse()
+
     fmt.Println("MQTest: Publish")
     fmt.Println()
 
     opt := mqtt.NewClientOptions()
-    opt.AddBroker("tcp://localhost:1883")
+    opt.AddBroker(fmt.Sprintf("tcp://%s:1883", *host))
 
     client := mqtt.NewClient(opt)
 
@@ -28,13 +34,10 @@ func main() {
         fmt.Println(token.Error())
     }
 
-    for i := 0; i < 5; i++ {
-        pub_msg := fmt.Sprintf("publish test messages %d", i)
-	token := client.Publish("test/go", 0, false, pub_msg)
+    for i := 0; ; i++ {
+	token := client.Publish(*topic, 0, false, fmt.Sprintf("publish test messages %d", i))
         token.Wait()
 
 	time.Sleep(3 * time.Second)
     }
-
-    client.Disconnect(250)
 }
