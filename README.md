@@ -11,5 +11,5 @@ Testing paho.mqtt.golang library
 ## GO
 
 - Binaries are statically compilied
-   CGO_ENABLED=0 GOOS=linux go build -ldflags "-w -s" -o publisher 
+  - CGO_ENABLED=0 GOOS=linux go build -ldflags "-w -s" -o <executable_name>
 - Binaries are included in repo for docker-compose
