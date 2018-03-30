@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  mqtt-server:
+    build: ./srv
+    ports:
+      - "1883:1883"
+
+  mqtt-subscriber:
+    build: ./subscriber
+    depends_on:
+      - mqtt-server
+
+  mqtt-publisher:
+    build: ./publisher
+    depends_on:
+      - mqtt-server
+
