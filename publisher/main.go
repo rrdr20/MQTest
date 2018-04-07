@@ -19,7 +19,7 @@ import (
 
 func main() {
     host := flag.String("host","localhost","Host name of the MQTT server")
-    topic := flag.String("topic", "#", "The topic to subscribe")
+    topic := flag.String("topic", "#", "The topic where messages are published")
     flag.Parse()
 
     fmt.Println("MQTest: Publish")
