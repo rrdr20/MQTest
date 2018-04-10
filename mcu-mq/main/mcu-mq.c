@@ -49,8 +49,8 @@ static void initialize_wifi(void) {
     
     wifi_config_t sta_config = {
 	.sta = {
-	    .ssid = "dw024",
-	    .password = "trixie024",
+	    .ssid = "ssid",
+	    .password = "password",
 	},
     };
 
@@ -62,6 +62,9 @@ void mqtt_task(void *none) {
     MQTTClient client;
     Network network;
     MQTTPacket_connectData connect_data = MQTTPacket_connectData_initializer;
+
+    // Need to implement way to pass in data.
+    // Method should be more dynamic than menuconfig. 
 
     char* mqtt_server = "192.168.15.240";
     unsigned char read_buf[64];
@@ -75,6 +78,9 @@ void mqtt_task(void *none) {
     if((rc = NetworkConnect(&network, mqtt_server, 1883)) != 0) {
 	ESP_LOGE(TAG, "NetworkConnect error: %d", rc);
     }
+
+    // TODO: Update connect_data with parameters, e.g. keepalive.
+    // Code below works for basica verifcation only.
 
     if((rc = MQTTConnect(&client, &connect_data)) != 0) {
 	ESP_LOGE(TAG, "MQTTConnect error: %d", rc);
@@ -114,8 +120,8 @@ void app_main() {
     nvs_flash_init();
     initialize_wifi();
 
-//    xEventGroupWaitBits(wifi_event_group, CONNECTED_BIT, false, true, portMAX_DELAY);
+    xEventGroupWaitBits(wifi_event_group, CONNECTED_BIT, false, true, portMAX_DELAY);
 
-//    xTaskCreate(&mqtt_task,"mqtt_task", 4096, NULL, 5, NULL);
+    xTaskCreate(&mqtt_task,"mqtt_task", 4096, NULL, 5, NULL);
 }
 
