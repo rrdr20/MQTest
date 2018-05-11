@@ -11,6 +11,7 @@
 package main
 
 import (
+    "os"
     "fmt"
     "flag"
     "time"
@@ -22,8 +23,12 @@ func main() {
     topic := flag.String("topic", "#", "The topic where messages are published")
     flag.Parse()
 
-    fmt.Println("MQTest: Publish")
-    fmt.Println()
+    hostname, err := os.Hostname();
+    if err != nil {
+        fmt.Println(err)
+    }
+
+    fmt.Println("Publisher:", hostname)
 
     opt := mqtt.NewClientOptions()
     opt.AddBroker(fmt.Sprintf("tcp://%s:1883", *host))
