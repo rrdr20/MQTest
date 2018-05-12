@@ -38,6 +38,10 @@ Testing paho.mqtt.golang library, paho.mqtt.embedded-C library and using the ESP
   - The code use to parse the data is repetitive and should be refactored.
   - The DHT-11 sensor used for testing seems to be faulty and returns incorrect values for humidity although the temperature readings seem to fall within the margin of error.
 
+### sht3x
+
+  - Adds code to gather readings from SHT31D senor via I2C bus.
+
 ## Photon
 
 - The code setups up the pins for reading tach signal and for outputting the PWM for control.
