@@ -40,7 +40,11 @@ Testing paho.mqtt.golang library, paho.mqtt.embedded-C library and using the ESP
 
 ### sht3x
 
-  - Adds code to gather readings from SHT31D senor via I2C bus.
+  - Adds code to gather readings from SHT31D sensor via I2C bus.
+  - Command codes and formulas for converting readings are taken from datasheet dated March 2017, version 4.
+  - Some code is repetitive for clarity and should be refactored.
+  - Only implements Reset, Status, and one-shot measurements. Only features needed for right now.
+
 
 ## Photon
 
