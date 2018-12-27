@@ -40,7 +40,7 @@ func main() {
     }
 
     for i := 0; ; i++ {
-	token := client.Publish(*topic, 0, false, fmt.Sprintf("publish test messages %d", i))
+	token := client.Publish(*topic, 0, false, fmt.Sprintf("%s test messages %d", hostname, i))
         token.Wait()
 
 	time.Sleep(3 * time.Second)

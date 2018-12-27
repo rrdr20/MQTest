@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mqtt-publisher
+  labels:
+    app: mqtt-publisher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mqtt-publisher
+  template:
+    metadata:
+      labels:
+        app: mqtt-publisher
+    spec:
+      containers:
+        - name: mqtt-publisher
+          image: rrdr20/publisher
+          imagePullPolicy: Never
+
